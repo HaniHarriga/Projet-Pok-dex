@@ -60,7 +60,6 @@ export default function PokeList() {
   }, [pokemons]);
   return (
     <div>
-      <h2>List of Pokemons</h2>
       <ul>
         {pokemons.map((pokemon, id) => (
           <div>
