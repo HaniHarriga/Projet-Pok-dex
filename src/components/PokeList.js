@@ -11,7 +11,7 @@ export default function PokeList() {
 
   const [image, setImage] = useState([]);
   const [type, setType] = useState([]);
-  // const [type_1, setType_1] = useState([]);
+  const [type_1, setType_1] = useState([]);
 
   const next = () => {
     const newUrl = {
@@ -52,7 +52,7 @@ export default function PokeList() {
         .then((data) => {
           setImage((current) => [...current, data.sprites.front_default]);
           setType((current) => [...current, data.types[0].type.name]);
-          // setType_1((current) => [...current, data.types[1].type.name]);
+          setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
 
         .catch((err) => console.error(err))
@@ -75,7 +75,9 @@ export default function PokeList() {
               <div>
                 <ul>
                   <li>{type[id]}</li>
-                  {/* <li>{type_1[index]}</li> */}
+                </ul>
+                <ul>
+                  <li>{type_1[id]}</li>
                 </ul>
                 <button type="submit">Add</button>
               </div>
