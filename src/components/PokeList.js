@@ -62,19 +62,19 @@ export default function PokeList() {
     <div>
       <h2>List of Pokemons</h2>
       <ul>
-        {pokemons.map((pokemon, index) => (
+        {pokemons.map((pokemon, id) => (
           <div>
             <div>
-              <h3 key={index}>
-                {index + 1} {pokemon.name}
+              <h3 key={pokemon.id}>
+                {id + 1} {pokemon.name}
               </h3>
               <div>
-                <img src={image[index]} alt="" />
+                <img src={image[id]} alt="" />
               </div>
 
               <div>
                 <ul>
-                  <li>{type[index]}</li>
+                  <li>{type[id]}</li>
                   {/* <li>{type_1[index]}</li> */}
                 </ul>
                 <button type="submit">Add</button>
