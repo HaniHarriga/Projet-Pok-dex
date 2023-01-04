@@ -1,14 +1,25 @@
 import React from "react";
 
 export default function Pokedex() {
-  //   const [input, setInput] = useState("");
+  // const handlechange = (e) => {
+  //   setPokemons(e.target.value.toLowerCase());
+  // };
 
   return (
     <div>
-      <input type="search" />
+      <br />
+      <form onSubmit={Pokedex}>
+        <label>
+          <input
+            type="text"
+            onChange={Pokedex}
+            placeholder="Search for Pokemon"
+          />
+        </label>
+      </form>
 
       <br />
-      <button onClick={""}></button>
+      {/* <button onClick={""}></button> */}
     </div>
   );
 }

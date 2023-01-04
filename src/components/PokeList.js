@@ -10,8 +10,8 @@ export default function PokeList() {
   });
 
   const [image, setImage] = useState([]);
-  const [type, setType] = useState([]);
-  const [type_1, setType_1] = useState([]);
+  const [type, setType] = useState("");
+  const [type_1, setType_1] = useState("");
 
   const next = () => {
     const newUrl = {
@@ -31,35 +31,52 @@ export default function PokeList() {
     setUrl(newUrl);
   };
 
+  // async function fetchData() {
+  //   return new Promise((resolve) => {
+  //     fetch("https://pokeapi.co/api/v2/pokemon/1")
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         resolve(data);
+  //         // console.log(data);
+  //       });
+  //   });
+  // }
+
+  // fetchData();
+
   useEffect(() => {
     fetch(url.current)
       .then((res) => res.json())
       .then((data) => {
         setPokemons(data.results);
+
         setUrl({
           current: url.current,
           next: data.next,
           previous: data.previous,
         });
+
+        console.log(data.results);
       })
       .catch((err) => console.log(err));
     //eslint-disable-next-line
   }, [url.current]);
 
   useEffect(() => {
-    setImage([]);
-    setType([]);
-    setType_1([]);
+    setImage("");
+    setType("");
+    setType_1("");
 
     pokemons.map((pokemon) =>
       fetch(pokemon.url)
         .then((res) => res.json())
         .then((data) => {
           setImage((current) => [...current, data.sprites.front_default]);
+
           setType((current) => [...current, data.types[0].type.name]);
+
           setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
-
         .catch((err) => console.error(err))
     );
   }, [pokemons]);
@@ -80,7 +97,7 @@ export default function PokeList() {
               <li>{type_1[id]}</li>
             </ul>
 
-            <button type="submit">Add</button>
+            <button type="submit">ADD TO POKEDEX</button>
           </div>
         </div>
       ))}
