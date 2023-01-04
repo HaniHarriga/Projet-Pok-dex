@@ -45,7 +45,12 @@ export default function PokeList() {
       .catch((err) => console.log(err));
     //eslint-disable-next-line
   }, [url.current]);
+
   useEffect(() => {
+    setImage([]);
+    setType([]);
+    setType_1([]);
+
     pokemons.map((pokemon) =>
       fetch(pokemon.url)
         .then((res) => res.json())
@@ -59,36 +64,31 @@ export default function PokeList() {
     );
   }, [pokemons]);
   return (
-    <div>
-      <ul>
-        {pokemons.map((pokemon, id) => (
+    <ul>
+      {pokemons.map((pokemon, id) => (
+        <div>
+          <h3 key={id}>
+            {pokemon.url.replace(/[^\d]/g, "").substring(1)} {pokemon.name}
+          </h3>
           <div>
-            <div>
-              <h3 key={pokemon.id}>
-                {id + 1} {pokemon.name}
-              </h3>
-              <div>
-                <img src={image[id]} alt="" />
-              </div>
-
-              <div>
-                <ul>
-                  <li>{type[id]}</li>
-                </ul>
-                <ul>
-                  <li>{type_1[id]}</li>
-                </ul>
-                <button type="submit">Add</button>
-              </div>
-            </div>
+            <img src={image[id]} alt="" />
           </div>
-        ))}
-      </ul>
+
+          <div>
+            <ul>
+              <li>{type[id]}</li>
+              <li>{type_1[id]}</li>
+            </ul>
+
+            <button type="submit">Add</button>
+          </div>
+        </div>
+      ))}
       <div>
+        <br />
         {url.previous && <button onClick={previous}>Previous</button>}
         {url.next && <button onClick={next}>Next</button>}
       </div>
-      <br />
-    </div>
+    </ul>
   );
 }
