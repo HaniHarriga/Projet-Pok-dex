@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Card from "react-bootstrap/Card";
 
 export default function PokeList() {
   const [pokemons, setPokemons] = useState([]);
@@ -81,25 +82,21 @@ export default function PokeList() {
     );
   }, [pokemons]);
   return (
-    <ul>
+    <ul className="container">
       {pokemons.map((pokemon, id) => (
-        <div>
-          <h3 key={id}>
-            {pokemon.url.replace(/[^\d]/g, "").substring(1)} {pokemon.name}
-          </h3>
-          <div>
-            <img src={image[id]} alt="" />
-          </div>
-
-          <div>
-            <ul>
-              <li>{type[id]}</li>
-              <li>{type_1[id]}</li>
-            </ul>
-
-            <button type="submit">ADD TO POKEDEX</button>
-          </div>
-        </div>
+        <Card key={id} style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>{pokemon.name}</Card.Title>
+            <Card.Subtitle>
+              {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+            </Card.Subtitle>
+            <Card.Img src={image[id]} alt="" />
+            <Card.Text>
+              Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+            </Card.Text>
+            <Card.Link href="#">Add to Pokedex</Card.Link>
+          </Card.Body>
+        </Card>
       ))}
       <div>
         <br />
