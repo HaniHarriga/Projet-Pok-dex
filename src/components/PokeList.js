@@ -32,18 +32,18 @@ export default function PokeList() {
     setUrl(newUrl);
   };
 
-  // async function fetchData() {
-  //   return new Promise((resolve) => {
-  //     fetch("https://pokeapi.co/api/v2/pokemon/1")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         resolve(data);
-  //         // console.log(data);
-  //       });
-  //   });
-  // }
+  async function fetchData() {
+    return new Promise((resolve) => {
+      fetch("https://pokeapi.co/api/v2/pokemon/1")
+        .then((res) => res.json())
+        .then((data) => {
+          resolve(data);
+          console.log(data);
+        });
+    });
+  }
 
-  // fetchData();
+  fetchData();
 
   useEffect(() => {
     fetch(url.current)
@@ -64,9 +64,9 @@ export default function PokeList() {
   }, [url.current]);
 
   useEffect(() => {
-    setImage("");
-    setType("");
-    setType_1("");
+    // setImage("");
+    // setType("");
+    // setType_1("");
 
     pokemons.map((pokemon) =>
       fetch(pokemon.url)
@@ -78,6 +78,9 @@ export default function PokeList() {
 
           setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
+        .then(setImage(""))
+        .then(setType(""))
+        .then(setType_1(""))
         .catch((err) => console.error(err))
     );
   }, [pokemons]);
