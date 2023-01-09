@@ -27,6 +27,9 @@ function Pokedex() {
         setType([data.types[0].type.name]);
         setType_1([data.types[1]?.type?.name]);
       })
+      .then(setImage([]))
+      .then(setType(""))
+      .then(setType_1(""))
       .catch((err) => console.error(err));
   };
 
