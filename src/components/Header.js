@@ -6,6 +6,8 @@ export default function Header() {
       <nav>
         <Link to="/"> List of Pokemons </Link>
         <Link to="/Pokedex"> My Pokedex </Link>
+        <Link to="/signup"> SignUp </Link>
+        <Link to="/signin"> Signin </Link>
       </nav>
     </div>
   );
