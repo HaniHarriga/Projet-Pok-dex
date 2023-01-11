@@ -38,29 +38,29 @@ function Pokedex() {
         setType([data.types[0].type.name]);
         setType_1([data.types[1]?.type?.name]);
       })
-      .then(setImage([]))
-      .then(setType(""))
-      .then(setType_1(""))
+      // .then(setImage([]))
+      // .then(setType(""))
+      // .then(setType_1(""))
       .catch((err) => console.error(err));
   };
 
-  // useEffect(() => {
-  //   pokemons.map((pokemon) =>
-  //     fetch(pokemon.url)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setImage((current) => [...current, data.sprites.front_default]);
+  useEffect(() => {
+    pokemons.map((pokemon) =>
+      fetch(pokemon.url)
+        .then((res) => res.json())
+        .then((data) => {
+          setImage((current) => [...current, data.sprites.front_default]);
 
-  //         setType((current) => [...current, data.types[0].type.name]);
+          setType((current) => [...current, data.types[0].type.name]);
 
-  //         setType_1((current) => [...current, data.types[1]?.type?.name]);
-  //       })
-  //       .then(setImage([]))
-  //       .then(setType(""))
-  //       .then(setType_1(""))
-  //       .catch((err) => console.error(err))
-  //   );
-  // }, [pokemons]);
+          setType_1((current) => [...current, data.types[1]?.type?.name]);
+        })
+        // .then(setImage([]))
+        // .then(setType(""))
+        // .then(setType_1(""))
+        .catch((err) => console.error(err))
+    );
+  }, [pokemons]);
 
   return (
     <div>
@@ -91,7 +91,47 @@ function Pokedex() {
         </Card>
       ))}
       <hr></hr>
-      {pokemons.map((pokemon, id) => (
+
+      <ul className="container" style={{ listStyleType: "none" }}>
+        {pokemons.map((pokemon, id) => (
+          <Card key={id} style={{ width: "18rem" }} className="mb-3">
+            <Card.Body>
+              <Card.Title className="font-weight-bold">
+                {pokemon.name}
+              </Card.Title>
+              <Card.Subtitle className="font-italic">
+                {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+              </Card.Subtitle>
+
+              <Card.Img
+                src={
+                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                  pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                  ".png"
+                }
+                alt=""
+              />
+              <Card.Text className="text-primary">
+                Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+              </Card.Text>
+              <button onClick={() => addToMyPokedex(pokemon)}>
+                Add to Pokedex
+              </button>
+            </Card.Body>
+          </Card>
+        ))}
+        <div>
+          <br />
+          {/* {url.previous && (
+            <button onClick={previous} className>
+              Previous
+            </button>
+          )}
+          {url.next && <button onClick={next}>Next</button>} */}
+        </div>
+      </ul>
+
+      {/* {pokemons.map((pokemon, id) => (
         <Card key={id} style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>{pokemon.name}</Card.Title>
@@ -105,7 +145,7 @@ function Pokedex() {
             </button>
           </Card.Body>
         </Card>
-      ))}
+      ))} */}
     </div>
   );
 }

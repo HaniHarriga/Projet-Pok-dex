@@ -1,4 +1,3 @@
-import { Button } from "bootstrap";
 import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 // import Pokemon from "./Pokemon";
@@ -8,7 +7,7 @@ export default function PokeList() {
   const [image, setImage] = useState([]);
   const [type, setType] = useState("");
   const [type_1, setType_1] = useState("");
-  let item = [];
+  let [item, setItem] = useState([]);
 
   const [url, setUrl] = useState({
     current: "https://pokeapi.co/api/v2/pokemon/",
