@@ -1,12 +1,14 @@
+import { Button } from "bootstrap";
 import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 // import Pokemon from "./Pokemon";
 
-export default function PokeList({ addToMyPokedex }) {
+export default function PokeList() {
   const [pokemons, setPokemons] = useState([]);
   const [image, setImage] = useState([]);
   const [type, setType] = useState("");
   const [type_1, setType_1] = useState("");
+  let item = [];
 
   const [url, setUrl] = useState({
     current: "https://pokeapi.co/api/v2/pokemon/",
@@ -44,6 +46,17 @@ export default function PokeList({ addToMyPokedex }) {
   // }
 
   // fetchData();
+
+  const addToMyPokedex = (pokemon) => {
+    item.push(pokemon);
+    localStorage.setItem("pokedex", JSON.stringify(item));
+    console.log(item, "liste des pokedex");
+  };
+
+  const initPokedex = () => {
+    item = JSON.parse(localStorage.getItem("pokedex"));
+  };
+  initPokedex();
 
   useEffect(() => {
     fetch(url.current)
@@ -94,46 +107,45 @@ export default function PokeList({ addToMyPokedex }) {
     );
   }, [pokemons]);
   return (
-    <ul className="container" style={{ listStyleType: "none" }}>
-      {pokemons.map((pokemon, id) => (
-        <Card key={id} style={{ width: "18rem" }} className="mb-3">
-          <Card.Body>
-            <Card.Title className="font-weight-bold">{pokemon.name}</Card.Title>
-            <Card.Subtitle className="font-italic">
-              {pokemon.url.replace(/[^\d]/g, "").substring(1)}
-            </Card.Subtitle>
+    <div>
+      <ul className="container" style={{ listStyleType: "none" }}>
+        {pokemons.map((pokemon, id) => (
+          <Card key={id} style={{ width: "18rem" }} className="mb-3">
+            <Card.Body>
+              <Card.Title className="font-weight-bold">
+                {pokemon.name}
+              </Card.Title>
+              <Card.Subtitle className="font-italic">
+                {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+              </Card.Subtitle>
 
-            <Card.Img src={image[id]} alt="" />
-            <Card.Text className="text-primary">
-              Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-            </Card.Text>
-            <Card.Link
-              href=""
-              onClick={() =>
-                addToMyPokedex({
-                  id: pokemon.url.replace(/[^\d]/g, "").substring(1),
-                  name: pokemon.name,
-                })
-              }
-            >
-              Add to Pokedex
-            </Card.Link>
-          </Card.Body>
-        </Card>
-      ))}
-      <div>
-        <br />
-        {url.previous && (
-          <button onClick={previous} className="btn btn-primary mr-2">
-            Previous
-          </button>
-        )}
-        {url.next && (
-          <button onClick={next} className="btn btn-primary">
-            Next
-          </button>
-        )}
-      </div>
-    </ul>
+              <Card.Img
+                src={
+                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                  pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                  ".png"
+                }
+                alt=""
+              />
+              <Card.Text className="text-primary">
+                Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+              </Card.Text>
+              <button onClick={() => addToMyPokedex(pokemon)}>
+                Add to Pokedex
+              </button>
+            </Card.Body>
+          </Card>
+        ))}
+        <div>
+          <br />
+          {url.previous && (
+            <button onClick={previous} className>
+              Previous
+            </button>
+          )}
+          {url.next && <button onClick={next}>Next</button>}
+        </div>
+      </ul>
+    </div>
   );
 }

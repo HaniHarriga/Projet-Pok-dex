@@ -1,0 +1,49 @@
+/* .poke-list {
+    padding: 30px;
+  }
+  
+  .poke-list h1 {
+    font-size: 36px;
+    color: #1b1e21;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .poke-list .card {
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .poke-list .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .poke-list .card img {
+    width: 15%;
+    height: auto;
+  }
+  
+  .poke-list .card .card-body {
+    padding: 20px;
+  }
+  
+  .poke-list .card .card-body .card-title {
+    font-size: 24px;
+  }
+  
+  .poke-list .card .card-body .card-subtitle {
+    font-size: 18px;
+    color: #1b1e21;
+  }
+  
+  .poke-list .card .card-body .card-text {
+    font-size: 18px;
+    color: #1b1e21;
+  }
+  
+  .poke-list .card .card-body button {
+    margin-top: 20px;
+  }
+   */
