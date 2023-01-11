@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 // import Pokemon from "./Pokemon";
 
 export default function PokeList() {
@@ -107,44 +107,38 @@ export default function PokeList() {
   }, [pokemons]);
   return (
     <div>
-      <ul className="container" style={{ listStyleType: "none" }}>
-        {pokemons.map((pokemon, id) => (
-          <Card key={id} style={{ width: "18rem" }} className="mb-3">
-            <Card.Body>
-              <Card.Title className="font-weight-bold">
-                {pokemon.name}
-              </Card.Title>
-              <Card.Subtitle className="font-italic">
-                {pokemon.url.replace(/[^\d]/g, "").substring(1)}
-              </Card.Subtitle>
+      {pokemons.map((pokemon, id) => (
+        <div key={id}>
+          <div>
+            <div>{pokemon.url.replace(/[^\d]/g, "").substring(1)}</div>
+            <h4>{pokemon.name}</h4>
 
-              <Card.Img
-                src={
-                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
-                  pokemon.url.replace(/[^\d]/g, "").substring(1) +
-                  ".png"
-                }
-                alt=""
-              />
-              <Card.Text className="text-primary">
-                Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-              </Card.Text>
-              <button onClick={() => addToMyPokedex(pokemon)}>
-                Add to Pokedex
-              </button>
-            </Card.Body>
-          </Card>
-        ))}
-        <div>
-          <br />
-          {url.previous && (
-            <button onClick={previous} className>
-              Previous
+            <img
+              src={
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                ".png"
+              }
+              alt={pokemon.name}
+            />
+            <div>
+              <ul>
+                <li>
+                  Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+                </li>
+              </ul>
+            </div>
+            <button onClick={() => addToMyPokedex(pokemon)}>
+              Add to Pokedex
             </button>
-          )}
-          {url.next && <button onClick={next}>Next</button>}
+          </div>
         </div>
-      </ul>
+      ))}
+      <div>
+        <br />
+        {url.previous && <button onClick={previous}>Previous</button>}
+        {url.next && <button onClick={next}>Next</button>}
+      </div>
     </div>
   );
 }
