@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
+import { FormControl } from "react-bootstrap";
+
+import "../styles/Pokedex.css";
 
 function Pokedex() {
   const [query, setQuery] = useState("");
@@ -64,58 +65,88 @@ function Pokedex() {
 
   return (
     <div>
-      <Form inline onSubmit={search}>
-        <FormControl
-          type="text"
-          placeholder="Search"
-          className="mr-sm-2"
-          value={query}
-          onChange={handleChange}
-        />
-        <Button type="submit">Search</Button>
-      </Form>
+      <div align="center">
+        <form onSubmit={search}>
+          <FormControl
+            className="bar"
+            class="container mr-sm-2"
+            type="search"
+            placeholder="Search for Pokemon"
+            value={query}
+            onChange={handleChange}
+          />
+          <div className="button">
+            <button class="btn btn-dark" type="submit">
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
 
       {searchResult.map((pokemon, id) => (
-        <Card key={id} style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Title>{pokemon.name}</Card.Title>
-            <Card.Subtitle>{pokemon.id}</Card.Subtitle>
-            <Card.Img src={image[id]} alt="" />
-            <Card.Text>
-              Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-            </Card.Text>
-            <button onClick={() => addToMyPokedex(pokemon)}>
-              Add to Pokedex
-            </button>
-          </Card.Body>
-        </Card>
-      ))}
-      <hr></hr>
+        <div class="result">
+          <div class="col-md-3 mb-3" key={id}>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="text-center">
+                  {pokemon.id}
+                  {"      "}
+                  {pokemon.name.toUpperCase()}
+                </h4>
+              </div>
 
-      {pokemons.map((pokemon, id) => (
-        <div key={id}>
-          <div>
-            <div>{pokemon.url.replace(/[^\d]/g, "").substring(1)}</div>
-            <h4>{pokemon.name}</h4>
+              <img className="img-fluid" src={image[id]} alt={pokemon.name} />
 
-            <img
-              src={
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
-                pokemon.url.replace(/[^\d]/g, "").substring(1) +
-                ".png"
-              }
-              alt={pokemon.name}
-            />
-            <div>
-              <ul>
-                <li>
+              <div class="card-text">
+                <p class="text-center">
                   Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-                </li>
-              </ul>
+                </p>
+              </div>
+              <button
+                class="btn btn-secondary"
+                onClick={() => addToMyPokedex(pokemon)}
+              >
+                Add to Pokedex
+              </button>
             </div>
           </div>
         </div>
       ))}
+      <hr></hr>
+
+      <div className="container">
+        <div class="row">
+          {pokemons.map((pokemon, id) => (
+            <div class="col-md-3 mb-3" key={id}>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="text-center">
+                    {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+                    {"      "}
+                    {pokemon.name.toUpperCase()}
+                  </h4>
+                </div>
+
+                <img
+                  className="img-fluid"
+                  src={
+                    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                    pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                    ".png"
+                  }
+                  alt={pokemon.name}
+                />
+
+                <div class="card-text">
+                  <p class="text-center">
+                    Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

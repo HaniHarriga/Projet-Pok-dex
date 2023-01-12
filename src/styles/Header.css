@@ -1,0 +1,15 @@
+.link{
+    
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  
+
+}
+.nav-link {
+    margin: 20px 50px;
+    text-transform: uppercase;
+    padding: 20px;
+}

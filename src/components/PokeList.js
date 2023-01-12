@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "../styles/PokeList.css";
+// import bootstrap from "bootstrap";
 // import Card from "react-bootstrap/Card";
 // import Pokemon from "./Pokemon";
 
@@ -106,13 +108,77 @@ export default function PokeList() {
     );
   }, [pokemons]);
   return (
-    <div>
-      {pokemons.map((pokemon, id) => (
-        <div key={id}>
-          <div>
-            <div>{pokemon.url.replace(/[^\d]/g, "").substring(1)}</div>
-            <h4>{pokemon.name}</h4>
+    <div className="container">
+      <div class="row">
+        {pokemons.map((pokemon, id) => (
+          <div class="col-md-3 mb-3" key={id}>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="text-center">
+                  {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+                  {"      "}
+                  {pokemon.name.toUpperCase()}
+                </h4>
+              </div>
 
+              <img
+                className="img-fluid"
+                src={
+                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                  pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                  ".png"
+                }
+                alt={pokemon.name}
+              />
+
+              <div class="card-text">
+                <p class="text-center">
+                  Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+                </p>
+              </div>
+              <button
+                class="btn btn-secondary"
+                onClick={() => addToMyPokedex(pokemon)}
+              >
+                Add to Pokedex
+              </button>
+            </div>
+          </div>
+        ))}
+        <div class="row">
+          <div class="col-md-12 text-center mt-3">
+            <br />
+            {url.previous && (
+              <button class="btn btn-dark mr-2" onClick={previous}>
+                Previous
+              </button>
+            )}
+            {url.next && (
+              <button class="btn btn-dark" onClick={next}>
+                Next
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">My Pokedex</h1>
+    </div>
+  </div>
+  <div class="row">
+    {pokemons.map((pokemon, id) => (
+      <div class="col-md-4 mb-3" key={id}>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{pokemon.name}</h5>
             <img
               src={
                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
@@ -120,25 +186,24 @@ export default function PokeList() {
                 ".png"
               }
               alt={pokemon.name}
+              class="img-fluid"
             />
-            <div>
-              <ul>
-                <li>
-                  Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-                </li>
-              </ul>
-            </div>
-            <button onClick={() => addToMyPokedex(pokemon)}>
+            <p class="card-text">
+              Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
+            </p>
+            <a href="#" class="btn btn-primary" onClick={() => addToMyPokedex(pokemon)}>
               Add to Pokedex
-            </button>
+            </a>
           </div>
         </div>
-      ))}
-      <div>
-        <br />
-        {url.previous && <button onClick={previous}>Previous</button>}
-        {url.next && <button onClick={next}>Next</button>}
       </div>
+    ))}
+  </div>
+  <div class="row">
+    <div class="col-md-12 text-center mt-3">
+      {url.previous && <button class="btn btn-secondary mr-2" onClick={previous}>Previous</button>}
+      {url.next && <button class="btn btn-secondary" onClick={next}>Next</button>}
     </div>
-  );
+  </div>
+</div> */
 }

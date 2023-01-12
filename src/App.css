@@ -1,0 +1,9 @@
+.back-img {
+    background-image: url("https://www.colorwallpapers.com/uploads/wallpaper/pokemon-wallpapers/width-853/3C1Kiv5M4Cck-wonderful-pokemon-backgrounds-image-for-computer.jpg");
+    height:100%;
+    width: 100%;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover;
+   background-attachment: fixed;
+}
