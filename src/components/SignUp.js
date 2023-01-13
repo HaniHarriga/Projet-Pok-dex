@@ -1,5 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import bcryptjs from "bcryptjs";
+
+// IMPORT LIBRAIRIE POUR HASHER UN PASSWORD
+
+// PAGE CREATION DE NOTRE USER
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -7,6 +12,11 @@ function SignUp() {
 
   const handleSubmit = () => {
     console.log(username, password);
+
+    // HASHER PASSWORD
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+
+    console.log(hashedPassword);
     axios
       .post("http://localhost:5000/signup", {
         username: username,
