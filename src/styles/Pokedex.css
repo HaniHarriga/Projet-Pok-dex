@@ -1,20 +1,15 @@
 .button{
-    
-    margin: 10px 35px 10px 0;
 
+    margin: 10px 35px 10px 0;
     padding: 5px ;
-  
-    
 }
-.bar{
-    
+.bar{    
     background-color: silver;
     width: 35%;
  
 }
-
-.result {
+/* .result {
     
     margin-left: 41%;
 
-}
+} */

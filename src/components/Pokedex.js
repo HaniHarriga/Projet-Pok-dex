@@ -16,7 +16,7 @@ function Pokedex() {
     setPokemons([...pokemons, pokemon]);
     localStorage.setItem("pokedex", JSON.stringify(pokemons));
 
-    console.log(pokemons, "liste des pokedex");
+    console.log(pokemons, "liste du pokedex");
   };
   const handleChange = (event) => {
     setQuery(event.target.value);
@@ -84,8 +84,8 @@ function Pokedex() {
       </div>
 
       {searchResult.map((pokemon, id) => (
-        <div class="result">
-          <div class="col-md-3 mb-3" key={id}>
+        <div>
+          <div class="col d-flex justify-content-center" key={id}>
             <div class="card">
               <div class="card-header">
                 <h4 class="text-center">
