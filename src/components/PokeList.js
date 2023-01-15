@@ -7,8 +7,8 @@ import "../styles/PokeList.css";
 export default function PokeList() {
   const [pokemons, setPokemons] = useState([]);
   const [image, setImage] = useState([]);
-  const [type, setType] = useState("");
-  const [type_1, setType_1] = useState("");
+  const [type, setType] = useState([]);
+  const [type_1, setType_1] = useState([]);
   let [item, setItem] = useState([]);
 
   const [url, setUrl] = useState({
@@ -77,8 +77,6 @@ export default function PokeList() {
     //eslint-disable-next-line
   }, [url.current]);
 
-  useEffect(() => {});
-
   useEffect(() => {
     // setImage("");
     // setType("");
@@ -102,8 +100,8 @@ export default function PokeList() {
           setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
         .then(setImage([]))
-        .then(setType(""))
-        .then(setType_1(""))
+        .then(setType([]))
+        .then(setType_1([]))
         .catch((err) => console.error(err))
     );
   }, [pokemons]);
