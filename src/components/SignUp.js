@@ -1,24 +1,24 @@
-// import { useState } from "react";
-// import axios from "axios";
+import { useState } from "react";
+import axios from "axios";
 
 // function SignUp() {
 //   const [username, setUsername] = useState("");
 //   const [password, setPassword] = useState("");
 
-//   const handleSubmit = () => {
-//     console.log(username, password);
-//     axios
-//       .post("http://localhost:5000/signup", {
-//         username: username,
-//         password: password,
-//       })
-//       .then((res) => {
-//         console.log(res);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+const handleSubmit = () => {
+  console.log(username, password);
+  axios
+    .post("http://localhost:5000/signup", {
+      username: username,
+      password: password,
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 //   return (
 //     <div className="outcard">

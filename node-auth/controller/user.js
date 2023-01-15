@@ -1,22 +1,32 @@
+//import bcryptjs from "bcryptjs";
 const UserModel = require("../models/user");
+const bcrypt = require("bcryptjs");
 
-module.exports.signup = (req, res) => {
+module.exports.signup = async (req, res) => {
   console.log(req.body);
 
   // name is not exist already
-  const newUser = new UserModel({
-    name: req.body.name,
-    password: req.body.password,
-  });
 
-  newUser
+  // HASHER PASSWORD
+  const hashedPassword = await bcrypt.hashSync(req.body.password, 10);
+  const newUser = new UserModel();
+  newUser.username = req.body.username;
+  newUser.password = hashedPassword;
+
+  console.log(hashedPassword);
+
+  await newUser
     .save()
     .then(() => {
-      res.send({ code: 200, message: "signup success" });
+      res.send({
+        code: 200,
+        message: "signup success",
+        password: hashedPassword,
+      });
     })
 
     .catch((error) => {
-      res.send({ code: 500, message: "signup error" });
+      //res.send({ code: 500, message: "signup error" });
     });
 
   res.send("succes");
