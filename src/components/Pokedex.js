@@ -4,13 +4,31 @@ import { FormControl } from "react-bootstrap";
 import "../styles/Pokedex.css";
 
 function Pokedex() {
+  // useState hook to set the initial state for the search query
+
   const [query, setQuery] = useState("");
+
+  // useState hook to set the initial state for the pokemons
+
   let [pokemons, setPokemons] = useState([]);
+
+  // useState hook to set the initial state for the image
+
   const [image, setImage] = useState([]);
+
+  // useState hook to set the initial state for the type
+
   const [type, setType] = useState([]);
+
+  // useState hook to set the initial state for the type_1
+
   const [type_1, setType_1] = useState([]);
 
+  // useState hook to set the initial state for the searchResult
+
   let [searchResult, setSearchResult] = useState([]);
+
+  // function to add a pokemon to the pokedex
 
   const addToMyPokedex = (pokemon) => {
     setPokemons([...pokemons, pokemon]);
@@ -18,32 +36,43 @@ function Pokedex() {
 
     console.log(pokemons, "liste du pokedex");
   };
+
+  // function to handle the change of the input query
+
   const handleChange = (event) => {
     setQuery(event.target.value);
   };
+
+  // function to initialize the pokedex from local storage
 
   const initPokedex = () => {
     pokemons = JSON.parse(localStorage.getItem("pokedex")) || [];
   };
   initPokedex();
 
+  // function to handle the search event
+
   const search = (event) => {
     event.preventDefault();
+
+    // fetch data from the PokeAPI using the search query
+
     fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(query, data);
         setSearchResult([data]);
 
+        // set the image, type and type_1 state
+
         setImage([data.sprites.front_default]);
         setType([data.types[0].type.name]);
         setType_1([data.types[1]?.type?.name]);
       })
-      // .then(setImage([]))
-      // .then(setType(""))
-      // .then(setType_1(""))
       .catch((err) => console.error(err));
   };
+
+  // useEffect hook to fetch the pokemons data and update the image, type and type_1 state
 
   useEffect(() => {
     pokemons.map((pokemon) =>
@@ -56,9 +85,6 @@ function Pokedex() {
 
           setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
-        // .then(setImage([]))
-        // .then(setType(""))
-        // .then(setType_1(""))
         .catch((err) => console.error(err))
     );
   }, [pokemons]);
@@ -66,6 +92,7 @@ function Pokedex() {
   return (
     <div>
       <div align="center">
+        {/* Form for searching for a Pokemon */}
         <form onSubmit={search}>
           <FormControl
             className="bar"
@@ -82,7 +109,7 @@ function Pokedex() {
           </div>
         </form>
       </div>
-
+      {/* Displaying the search results as a list of cards */}
       {searchResult.map((pokemon, id) => (
         <div>
           <div class="col d-flex justify-content-center" key={id}>
@@ -102,6 +129,7 @@ function Pokedex() {
                   Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
                 </p>
               </div>
+              {/* Button for adding the Pokemon to the Pokedex */}
               <button
                 class="btn btn-secondary"
                 onClick={() => addToMyPokedex(pokemon)}
@@ -114,6 +142,7 @@ function Pokedex() {
       ))}
       <hr></hr>
 
+      {/* Displaying a list of Pokemons */}
       <div className="container">
         <div class="row">
           {pokemons.map((pokemon, id) => (

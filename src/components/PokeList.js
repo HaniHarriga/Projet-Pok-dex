@@ -1,21 +1,24 @@
 import { useState, useEffect } from "react";
 import "../styles/PokeList.css";
-// import bootstrap from "bootstrap";
-// import Card from "react-bootstrap/Card";
-// import Pokemon from "./Pokemon";
 
 export default function PokeList() {
+  //  useState hook to set the initial state for the pokemons, type and type_1
+
   const [pokemons, setPokemons] = useState([]);
-  const [image, setImage] = useState([]);
   const [type, setType] = useState([]);
   const [type_1, setType_1] = useState([]);
-  let [item, setItem] = useState([]);
 
+  //  item is an array used to store the items of the pokedex
+  let item = [];
+
+  //  useState hook to set the initial state for the url
   const [url, setUrl] = useState({
     current: "https://pokeapi.co/api/v2/pokemon/",
     next: null,
     previous: null,
   });
+
+  //  function to navigate to the next page
 
   const next = () => {
     const newUrl = {
@@ -26,6 +29,8 @@ export default function PokeList() {
     setUrl(newUrl);
   };
 
+  // function to navigate to the previous page
+
   const previous = () => {
     const newUrl = {
       current: url.previous,
@@ -35,18 +40,7 @@ export default function PokeList() {
     setUrl(newUrl);
   };
 
-  // async function fetchData() {
-  //   return new Promise((resolve) => {
-  //     fetch("https://pokeapi.co/api/v2/pokemon/1")
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         resolve(data);
-  //         console.log(data);
-  //       });
-  //   });
-  // }
-
-  // fetchData();
+  // function to add a pokemon to the pokedex
 
   const addToMyPokedex = (pokemon) => {
     item.push(pokemon);
@@ -54,10 +48,14 @@ export default function PokeList() {
     console.log(item, "liste des pokedex");
   };
 
+  // function to initialize the pokedex
+
   const initPokedex = () => {
     item = JSON.parse(localStorage.getItem("pokedex"));
   };
   initPokedex();
+
+  //  useEffect hook to fetch data from the API when the component mounts
 
   useEffect(() => {
     fetch(url.current)
@@ -77,29 +75,18 @@ export default function PokeList() {
     //eslint-disable-next-line
   }, [url.current]);
 
+  //  useEffect hook to fetch data for the types of the pokemons
+
   useEffect(() => {
-    // setImage("");
-    // setType("");
-    // setType_1("");
-
-    // pokemons.sort((a, b) => {
-    //   const idA = a.url.replace(/[$\d]/g, "").substring(1);
-    //   const idB = b.url.replace(/[$\d]/g, "").substring(1);
-
-    //   return idA - idB;
-    // });
-
     pokemons.map((pokemon) =>
       fetch(pokemon.url)
         .then((res) => res.json())
         .then((data) => {
-          setImage((current) => [...current, data.sprites.front_default]);
-
           setType((current) => [...current, data.types[0].type.name]);
 
           setType_1((current) => [...current, data.types[1]?.type?.name]);
         })
-        .then(setImage([]))
+
         .then(setType([]))
         .then(setType_1([]))
         .catch((err) => console.error(err))
@@ -108,11 +95,15 @@ export default function PokeList() {
   return (
     <div className="container">
       <div class="row">
+        {/* map through the pokemons array and display each pokemon in a card */}
+
         {pokemons.map((pokemon, id) => (
           <div class="col-md-3 mb-3" key={id}>
             <div class="card">
               <div class="card-header">
                 <h4 class="text-center">
+                  {/* display the id and name of the pokemon */}
+
                   {pokemon.url.replace(/[^\d]/g, "").substring(1)}
                   {"      "}
                   {pokemon.name.toUpperCase()}
@@ -131,11 +122,14 @@ export default function PokeList() {
 
               <div class="card-text">
                 <p class="text-center">
+                  {/* display the type of the pokemon */}
                   Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
                 </p>
               </div>
               <button
                 class="btn btn-secondary"
+                // on click, call the addToMyPokedex function and pass in the current pokemon
+
                 onClick={() => addToMyPokedex(pokemon)}
               >
                 Add to Pokedex
@@ -146,6 +140,9 @@ export default function PokeList() {
         <div class="row">
           <div class="col-md-12 text-center mt-3">
             <br />
+
+            {/* render the previous and next buttons if they exist */}
+
             {url.previous && (
               <button class="btn btn-dark mr-2" onClick={previous}>
                 Previous
@@ -161,47 +158,4 @@ export default function PokeList() {
       </div>
     </div>
   );
-}
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">My Pokedex</h1>
-    </div>
-  </div>
-  <div class="row">
-    {pokemons.map((pokemon, id) => (
-      <div class="col-md-4 mb-3" key={id}>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{pokemon.name}</h5>
-            <img
-              src={
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
-                pokemon.url.replace(/[^\d]/g, "").substring(1) +
-                ".png"
-              }
-              alt={pokemon.name}
-              class="img-fluid"
-            />
-            <p class="card-text">
-              Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
-            </p>
-            <a href="#" class="btn btn-primary" onClick={() => addToMyPokedex(pokemon)}>
-              Add to Pokedex
-            </a>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-  <div class="row">
-    <div class="col-md-12 text-center mt-3">
-      {url.previous && <button class="btn btn-secondary mr-2" onClick={previous}>Previous</button>}
-      {url.next && <button class="btn btn-secondary" onClick={next}>Next</button>}
-    </div>
-  </div>
-</div> */
 }
