@@ -6,7 +6,7 @@ import "../styles/Pokedex.css";
 function Pokedex() {
   // useState hook to set the initial state for the search query
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState([]);
 
   // useState hook to set the initial state for the pokemons
 
@@ -150,7 +150,7 @@ function Pokedex() {
               <div class="card">
                 <div class="card-header">
                   <h4 class="text-center">
-                    {pokemon.url.replace(/[^\d]/g, "").substring(1)}
+                    {pokemon.id}
                     {"      "}
                     {pokemon.name.toUpperCase()}
                   </h4>
@@ -160,7 +160,7 @@ function Pokedex() {
                   className="img-fluid"
                   src={
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
-                    pokemon.url.replace(/[^\d]/g, "").substring(1) +
+                    pokemon.id +
                     ".png"
                   }
                   alt={pokemon.name}
