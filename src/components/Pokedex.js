@@ -145,12 +145,16 @@ function Pokedex() {
       {/* Displaying a list of Pokemons */}
       <div className="container">
         <div class="row">
+          {/* map through the pokemons array and display each pokemon in a card */}
+
           {pokemons.map((pokemon, id) => (
             <div class="col-md-3 mb-3" key={id}>
               <div class="card">
                 <div class="card-header">
                   <h4 class="text-center">
-                    {pokemon.id}
+                    {/* display the id and name of the pokemon */}
+
+                    {pokemon.url.replace(/[^\d]/g, "").substring(1)}
                     {"      "}
                     {pokemon.name.toUpperCase()}
                   </h4>
@@ -160,7 +164,7 @@ function Pokedex() {
                   className="img-fluid"
                   src={
                     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
-                    pokemon.id +
+                    pokemon.url.replace(/[^\d]/g, "").substring(1) +
                     ".png"
                   }
                   alt={pokemon.name}
@@ -168,9 +172,18 @@ function Pokedex() {
 
                 <div class="card-text">
                   <p class="text-center">
+                    {/* display the type of the pokemon */}
                     Type: {type[id]} {type_1[id] && `, ${type_1[id]}`}
                   </p>
                 </div>
+                <button
+                  class="btn btn-secondary"
+                  // on click, call the addToMyPokedex function and pass in the current pokemon
+
+                  onClick={() => addToMyPokedex(pokemon)}
+                >
+                  Add to Pokedex
+                </button>
               </div>
             </div>
           ))}
